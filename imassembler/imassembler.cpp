@@ -2,6 +2,10 @@
 #include <iostream>
 #include <d3d11.h>
 
+#include "ImGui/imgui.h"
+#include "ImGui/backends/imgui_impl_win32.h"
+#include "ImGui/backends/imgui_impl_dx11.h"
+
 #pragma comment (lib, "d3d11.lib")
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
