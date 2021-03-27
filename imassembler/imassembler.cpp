@@ -8,12 +8,12 @@
 
 #pragma comment (lib, "d3d11.lib")
 
+IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 IDXGISwapChain* swap_chain{};
 ID3D11Device* device{};
 ID3D11DeviceContext* device_context{};
 ID3D11RenderTargetView* back_buffer{};
-
-IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam);
