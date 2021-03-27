@@ -122,6 +122,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		swap_chain->Present(0, 0);
 
 		if (!is_open) PostMessageA(hwnd, WM_QUIT, NULL, NULL);
+
+		Sleep(1);
 	}
 
 	ImGui_ImplDX11_Shutdown();
