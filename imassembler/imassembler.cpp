@@ -23,8 +23,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 		PostQuitMessage(0);
 		return 0;
 	}
-	case WM_SIZE: {
-	}
 	}
 	return DefWindowProcA(hwnd, uMsg, wParam, lParam);
 }
