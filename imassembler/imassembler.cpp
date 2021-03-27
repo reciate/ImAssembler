@@ -23,6 +23,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 		PostQuitMessage(0);
 		return 0;
 	}
+	case WM_SIZE: {
+	}
 	}
 	return DefWindowProcA(hwnd, uMsg, wParam, lParam);
 }
@@ -67,11 +69,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	RegisterClassA(&window_class);
 
-	HWND hwnd{ CreateWindowExA(0, "WindowClass", "ImAssembler", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL) };
+	HWND hwnd{ CreateWindowExA(0, "WindowClass", "ImAssembler", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 0, 0, NULL, NULL, hInstance, NULL) };
 
 	if (!hwnd) return 0;
 
-	ShowWindow(hwnd, nCmdShow);
+	ShowWindow(hwnd, 0);
 
 	initialize_dx(hwnd);
 
@@ -100,7 +102,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
 
-		ImGui::ShowDemoWindow();
+		RECT window_rect{};
+		GetWindowRect(hwnd, &window_rect);
+
+		ImGui::SetNextWindowSize({ 800, 600 }, ImGuiCond_FirstUseEver);
+		ImGui::SetNextWindowPos({ 0, 0 }, ImGuiCond_FirstUseEver);
+
+		ImGui::Begin("ImAssembler");
+
+		ImGui::End();
 
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
