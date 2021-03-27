@@ -46,7 +46,7 @@ void initialize_dx(HWND hwnd) {
 
 	ID3D11Texture2D* p_back_buffer{};
 
-	swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(&p_back_buffer));
+	swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&p_back_buffer));
 
 	device->CreateRenderTargetView(p_back_buffer, NULL, &back_buffer);
 
