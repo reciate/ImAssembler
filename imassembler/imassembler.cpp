@@ -1,8 +1,14 @@
 #include <Windows.h>
 #include <iostream>
 #include <d3d11.h>
+#include <Zydis/Zydis.h>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <iostream>
 
 #include "ImGui/imgui.h"
+#include "ImGui/imgui_stdlib.h"
 #include "ImGui/backends/imgui_impl_win32.h"
 #include "ImGui/backends/imgui_impl_dx11.h"
 
@@ -50,6 +56,41 @@ void cleanup_dx() {
 	swap_chain->Release();
 }
 
+void dis(std::string& buffer) {
+	ZydisDecoder decoder{};
+	ZydisDecoderInit(&decoder, ZYDIS_MACHINE_MODE_LONG_64, ZYDIS_ADDRESS_WIDTH_64);
+	ZydisFormatter formatter{};
+	ZydisFormatterInit(&formatter, ZYDIS_FORMATTER_STYLE_INTEL);
+
+	std::istringstream string_stream{ buffer };
+	std::string instruction_string{};
+	std::vector<char> instructions{};
+
+	while (getline(string_stream, instruction_string, ',')) {
+		char b{ static_cast<char>(std::stoi(instruction_string, 0, 16)) };
+		instructions.push_back(b);
+	}
+
+	buffer.clear();
+
+	int offset{};
+	ZydisDecodedInstruction instruction{};
+
+	while (offset < instructions.size() * sizeof(char)) {
+		ZydisDecoderDecodeBuffer(&decoder, instructions.data() + offset, 16, &instruction);
+
+		char buf[256]{};
+		ZydisFormatterFormatInstruction(&formatter, &instruction, buf, sizeof(buf), ZYDIS_RUNTIME_ADDRESS_NONE);
+
+		std::cout << buffer << '\n';
+
+		offset += instruction.length;
+
+		buffer += buf;
+		buffer += '\n';
+	}
+}
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	WNDCLASSA window_class{ 0, WindowProc, 0, 0, hInstance, 0, 0, 0, 0, "WindowClass" };
 
@@ -74,6 +115,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MSG message{};
 	bool is_open{ true };
 
+	std::string buffer{};
+
 	while (message.message != WM_QUIT) {
 		if (PeekMessageA(&message, NULL, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&message);
@@ -92,6 +135,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ImGui::SetNextWindowPos({ 0, 0 }, ImGuiCond_FirstUseEver);
 
 		ImGui::Begin("ImAssembler", &is_open, ImGuiWindowFlags_NoResize);
+
+		ImGui::InputTextMultiline("Input", &buffer);
+		if (ImGui::Button("Disassemble")) dis(buffer);
 
 		ImGui::End();
 
