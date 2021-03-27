@@ -109,6 +109,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		ImGui::Begin("ImAssembler", &is_open);
 
+		ImGui::ShowDemoWindow();
+
 		ImGui::End();
 
 		ImGui::Render();
@@ -117,11 +119,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ImGui::UpdatePlatformWindows();
 		ImGui::RenderPlatformWindowsDefault();
 
-		swap_chain->Present(0, 0);
+		swap_chain->Present(1, 0);
 
 		if (!is_open) PostMessageA(hwnd, WM_QUIT, NULL, NULL);
 
-		Sleep(1);
+		Sleep(1)
 	}
 
 	ImGui_ImplDX11_Shutdown();
