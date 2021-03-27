@@ -78,6 +78,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ImGui::CreateContext();
 	ImGuiIO& io{ ImGui::GetIO() };
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.IniFilename = NULL;
 
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(device, device_context);
