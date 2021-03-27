@@ -94,9 +94,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			continue;
 		}
 
-		float colour[]{ 0.0f, 0.0f, 0.0f, 255.0f };
-		device_context->ClearRenderTargetView(back_buffer, colour);
-
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
