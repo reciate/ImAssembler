@@ -65,8 +65,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	ImGui::CreateContext();
 	ImGuiIO& io{ ImGui::GetIO() };
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_ViewportsEnable;
 	io.IniFilename = NULL;
 
 	ImGui_ImplWin32_Init(hwnd);
@@ -92,9 +91,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ImGui::SetNextWindowSize({ 800, 600 }, ImGuiCond_FirstUseEver);
 		ImGui::SetNextWindowPos({ 0, 0 }, ImGuiCond_FirstUseEver);
 
-		ImGui::Begin("ImAssembler", &is_open);
-
-		ImGui::ShowDemoWindow();
+		ImGui::Begin("ImAssembler", &is_open, ImGuiWindowFlags_NoResize);
 
 		ImGui::End();
 
