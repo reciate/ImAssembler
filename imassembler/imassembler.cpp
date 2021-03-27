@@ -85,7 +85,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	MSG message{};
 
-	while (GetMessageA(&message, NULL, 0, 0)) {
+	while (message.message != WM_QUIT) {
+		if (PeekMessageA(&message, NULL, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&message);
+			DispatchMessageA(&message);
+			continue;
+		}
 
 		float colour[]{ 0.0f, 0.0f, 0.0f, 255.0f };
 		device_context->ClearRenderTargetView(back_buffer, colour);
@@ -100,9 +105,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 		swap_chain->Present(0, 0);
-
-		TranslateMessage(&message);
-		DispatchMessageA(&message);
 	}
 
 	ImGui_ImplDX11_Shutdown();
