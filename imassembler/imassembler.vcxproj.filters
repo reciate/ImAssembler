@@ -38,5 +38,8 @@
     <ClInclude Include="ImGui\imgui_internal.h" />
     <ClInclude Include="ImGui\backends\imgui_impl_dx11.h" />
     <ClInclude Include="ImGui\backends\imgui_impl_win32.h" />
+    <ClInclude Include="ImGui\imstb_rectpack.h" />
+    <ClInclude Include="ImGui\imstb_textedit.h" />
+    <ClInclude Include="ImGui\imstb_truetype.h" />
   </ItemGroup>
 </Project>
