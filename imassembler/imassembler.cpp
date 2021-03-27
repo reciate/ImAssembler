@@ -87,6 +87,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ImGui_ImplDX11_Init(device, device_context);
 
 	MSG message{};
+	bool is_open{ true };
 
 	while (message.message != WM_QUIT) {
 		if (PeekMessageA(&message, NULL, 0, 0, PM_REMOVE)) {
@@ -108,7 +109,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ImGui::SetNextWindowSize({ 800, 600 }, ImGuiCond_FirstUseEver);
 		ImGui::SetNextWindowPos({ 0, 0 }, ImGuiCond_FirstUseEver);
 
-		ImGui::Begin("ImAssembler");
+		ImGui::Begin("ImAssembler", &is_open);
 
 		ImGui::End();
 
@@ -119,6 +120,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ImGui::RenderPlatformWindowsDefault();
 
 		swap_chain->Present(0, 0);
+
+		if (!is_open) PostMessageA(hwnd, WM_QUIT, NULL, NULL);
 	}
 
 	ImGui_ImplDX11_Shutdown();
