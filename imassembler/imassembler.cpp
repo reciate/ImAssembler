@@ -123,7 +123,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		if (!is_open) PostMessageA(hwnd, WM_QUIT, NULL, NULL);
 
-		Sleep(1)
+		Sleep(1);
 	}
 
 	ImGui_ImplDX11_Shutdown();
