@@ -82,8 +82,6 @@ void dis(std::string& buffer) {
 		char buf[256]{};
 		ZydisFormatterFormatInstruction(&formatter, &instruction, buf, sizeof(buf), ZYDIS_RUNTIME_ADDRESS_NONE);
 
-		std::cout << buffer << '\n';
-
 		offset += instruction.length;
 
 		buffer += buf;
